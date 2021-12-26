@@ -32,7 +32,10 @@ export default function Home({ posts }) {
 
 // Fetch data at build time
 export async function getStaticProps() {
-  const posts = (await getPosts()) || [];
+  const posts = (await getPosts()).sort((a, b) => {
+    return new Date(a.createdAt) - new Date(b.createdAt)
+  }).reverse() || [];
+
   return {
     props: { posts },
   };
